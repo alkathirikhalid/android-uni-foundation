@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String fileName;
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
+    private boolean isPlaying, isRecording;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +29,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonPlay = (Button) findViewById(R.id.buttonPlay);
         buttonPlay.setOnClickListener(this);
         fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "audiorecorder.3gp";
+        isPlaying = true;
+        isRecording = true;
+        buttonPlay.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonRecord:
+                if (isRecording) {
+                    startRecording();
+                    // Set image view
+                    buttonPlay.setVisibility(View.VISIBLE);
+                    buttonRecord.setText("Stop");
+                } else {
+                    stopRecording();
+                    buttonRecord.setText("Record");
+                }
+                isRecording = !isRecording;
+                break;
+            case R.id.buttonPlay:
+                if (isPlaying) {
+                    startPlaying();
+                    // set image view
+                    buttonPlay.setText("Stop");
+                } else {
+                    stopPlaying();
+                    buttonPlay.setText("Play");
+                }
+                isPlaying = !isPlaying;
+                break;
+        }
 
     }
 
