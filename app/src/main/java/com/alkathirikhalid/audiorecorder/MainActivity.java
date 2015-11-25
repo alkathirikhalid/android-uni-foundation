@@ -32,4 +32,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
     }
+
+    private void startRecording() {
+
+    }
+
+    private void stopRecording() {
+
+    }
+
+    private void startPlaying() {
+
+    }
+
+    private void stopPlaying() {
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }
