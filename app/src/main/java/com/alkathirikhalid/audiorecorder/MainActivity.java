@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener {
     private Button buttonRecord, buttonPlay;
     private ImageView imageView;
     private static String fileName;
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRecord.setOnClickListener(this);
         buttonPlay = (Button) findViewById(R.id.buttonPlay);
         buttonPlay.setOnClickListener(this);
-        fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "audiorecorder.3gp";
+        fileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audiorecorder.3gp";
         isPlaying = true;
         isRecording = true;
         buttonPlay.setVisibility(View.INVISIBLE);
@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (isRecording) {
                     startRecording();
                     // Set image view
-                    buttonPlay.setVisibility(View.VISIBLE);
                     buttonRecord.setText("Stop");
                 } else {
                     stopRecording();
                     buttonRecord.setText("Record");
+                    buttonPlay.setVisibility(View.VISIBLE);
+                    buttonRecord.setVisibility(View.INVISIBLE);
                 }
                 isRecording = !isRecording;
                 break;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     stopPlaying();
                     buttonPlay.setText("Play");
+                    buttonPlay.setVisibility(View.INVISIBLE);
+                    buttonRecord.setVisibility(View.VISIBLE);
                 }
                 isPlaying = !isPlaying;
                 break;
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startPlaying() {
         mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnCompletionListener(this);
         try {
             mediaPlayer.setDataSource(fileName);
         } catch (IOException e) {
@@ -113,5 +117,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mediaPlayer != null) {
             mediaPlayer.release();
         }
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        stopPlaying();
+        buttonPlay.setText("Play");
+        buttonPlay.setVisibility(View.INVISIBLE);
+        buttonRecord.setVisibility(View.VISIBLE);
+        isPlaying = !isPlaying;
     }
 }
