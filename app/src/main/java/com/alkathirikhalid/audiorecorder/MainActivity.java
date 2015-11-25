@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonPlay:
                 if (isPlaying) {
                     startPlaying();
-                    // set image view
+                    imageView.setImageResource(R.drawable.wave);
                     buttonPlay.setText("Stop");
                 } else {
                     stopPlaying();
+                    imageView.setImageResource(0);
                     buttonPlay.setText("Play");
                     buttonPlay.setVisibility(View.INVISIBLE);
                     buttonRecord.setVisibility(View.VISIBLE);
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCompletion(MediaPlayer mp) {
         stopPlaying();
+        imageView.setImageResource(0);
         buttonPlay.setText("Play");
         buttonPlay.setVisibility(View.INVISIBLE);
         buttonRecord.setVisibility(View.VISIBLE);
