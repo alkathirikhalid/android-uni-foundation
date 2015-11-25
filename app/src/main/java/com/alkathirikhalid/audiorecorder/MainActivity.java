@@ -128,3 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isPlaying = !isPlaying;
     }
 }
+
+/*
+Lab Activity 6
+1) Group common repetitive used methods in the MainActivity.java code
+2) Change hardcoded String in the MainActivity.java to a resource and call them from Strings.xml
+3) Add images to the code to utilize the imageView and (optional) buttons if you may so wish
+ */
